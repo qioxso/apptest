@@ -3,7 +3,7 @@ name: Android Build APK
 on:
   push:
     branches: [ "main", "master" ]
-  workflow_dispatch: 
+  workflow_dispatch:
 
 jobs:
   build:
@@ -18,20 +18,18 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
-      # 第一步：在虚拟机中安装 gradle 环境
+      # 关键修改：强制使用 Gradle 8.2，避免使用不兼容的 Gradle 9.0+
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v3
+        with:
+           gradle-version: '8.2'
 
-      # 第二步：生成 gradlew 文件
-      # 我们直接调用系统中安装好的 gradle 来运行 wrapper 任务
       - name: Generate Gradle Wrapper
         run: gradle wrapper
 
-      # 第三步：赋予执行权限（现在文件存在了）
       - name: Grant execute permission for gradlew
         run: chmod +x gradlew
 
-      # 第四步：编译
       - name: Build Debug APK
         run: ./gradlew assembleDebug
 
