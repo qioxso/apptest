@@ -5,7 +5,7 @@ project("simplejni")
 add_library(
         simplejni
         SHARED
-        native-lib.cpp) // 指定源文件
+        native-lib.cpp)
 
 find_library(
         log-lib
